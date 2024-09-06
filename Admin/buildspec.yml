@@ -3,12 +3,13 @@ version: 0.2
 
 env:
   parameter-store:
-    AWS_ACCOUNT_ID: /myapp/AWS_ACCOUNT_ID
-    AWS_DEFAULT_REGION: /myapp/AWS_DEFAULT_REGION
-    IMAGE_REPO_NAME: /myapp/IMAGE_REPO_NAME
-    #append date time in seconds to the image tag
+    AWS_ACCOUNT_ID: /chatwithpdf/AWS_ACCOUNT_ID
+    AWS_DEFAULT_REGION: /chatwithpdf/AWS_DEFAULT_REGION
+    IMAGE_REPO_NAME: /chatwithpdf/IMAGE_REPO_NAME
+    #current date time for image tag
+    #IMAGE_TAG: $(date +%Y%m%d%H%M%S)
     IMAGE_TAG: $CODEBUILD_RESOLVED_SOURCE_VERSION
-    IMAGE_TAG: /myapp/IMAGE_TAG
+    #IMAGE_TAG: /chatwithpdf/IMAGE_TAG
 
 phases:
   pre_build:
