@@ -4,15 +4,16 @@ import os
 import uuid
 
 ##S3 Client
-s3_client = boto3.client("s3")
+s3_client = boto3.client("s3", region_name='us-east-1')
 BUCKET_NAME = os.getenv("BUCKET_NAME")
 
 
 ##Bedrock
 from langchain_community.embeddings import BedrockEmbeddings
 
-bedrock_client = boto3.client(service_name="bedrock-runtime")
-bedrock_embeddings = BedrockEmbeddings(model_id="amazon.titan-embed-text-v2:0", client=bedrock_client)
+bedrock_client = boto3.client(service_name="bedrock-runtime", region_name='us-east-1')
+
+bedrock_embeddings = BedrockEmbeddings(model_id="amazon.titan-embed-text-v1", client=bedrock_client)
 
 ##Split text in chuncks
 ##Text Splitter
@@ -83,7 +84,7 @@ def main():
         result = create_vector_store(request_id, splitted_docs)
 
         if result:
-            str.write("PDF vectorized successfully.")
+            st.write("PDF vectorized successfully.")
         else:
             st.write("Error in PDF Vectorizing, please check logs.")
 
@@ -100,3 +101,6 @@ if __name__=="__main__":
 #docker run -e BUCKET_NAME=sidd-poc-bucket -it -p 8083:8083 --volume C:\Users\temp:/root/temp admin-pdf-reader
 
 ##docker run -e BUCKET_NAME=sidd-poc-bucket -it -p 8083:8083 admin-pdf-reader
+
+
+#docker exec -it fc1fe5885fa2 CMD.exe
