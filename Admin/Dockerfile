@@ -1,4 +1,5 @@
 FROM python:3.11
+#Paste in AWS credentials to run Admin successfully
 WORKDIR /app
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
