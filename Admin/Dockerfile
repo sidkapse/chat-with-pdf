@@ -1,7 +1,4 @@
 FROM python:3.11
-ENV AWS_ACCESS_KEY_ID=AKIAUCREGJSLF7HQVEOP
-ENV AWS_SECRET_ACCESS_KEY=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
-ENV AWS_REGION=us-east-1
 WORKDIR /app
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
