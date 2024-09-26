@@ -9,7 +9,7 @@ BUCKET_NAME = os.getenv("BUCKET_NAME")
 
 
 ##Bedrock
-from langchain_community.embeddings import BedrockEmbeddings
+from langchain_aws import BedrockEmbeddings
 
 bedrock_client = boto3.client(service_name="bedrock-runtime", region_name='us-east-1')
 
@@ -72,19 +72,19 @@ def main():
 
         ##Split Text
         splitted_docs = split_text(pages, 1000, 200)
-        st.write(f"Splitted Docs length: {len(splitted_docs)}")
-        st.write("==============")
-        st.write(splitted_docs[0])
-        st.write("==============")
-        st.write(splitted_docs[1])
-        st.write("==============")
-        st.write(splitted_docs[2])
+        # st.write(f"Splitted Docs length: {len(splitted_docs)}")
+        # st.write("==============")
+        # st.write(splitted_docs[0])
+        # st.write("==============")
+        # st.write(splitted_docs[1])
+        # st.write("==============")
+        # st.write(splitted_docs[2])
 
         st.write("Creating the vector store")
         result = create_vector_store(request_id, splitted_docs)
 
         if result:
-            st.write("PDF vectorized successfully.")
+            st.write("PDF vectorized successfully and stored in Vector DB")
         else:
             st.write("Error in PDF Vectorizing, please check logs.")
 
@@ -93,14 +93,14 @@ if __name__=="__main__":
     main()
 
 
-##docker build -t admin-pdf-reader .
+##docker build -t admin-pdf-reader-v2 .
 ##docker run -e BUCKET_NAME=sidd-poc-bucket -v 'C:\Users\Administrator\.aws\:/root/.aws/' -p 8083:8083 -it admin-pdf-reader
-##docker run -e BUCKET_NAME=sidd-poc-bucket -it -p 8083:8083 --volume //C/Users/Administrator/.aws/:/root/.aws/ admin-pdf-reader
+##docker run -e BUCKET_NAME=sidd-poc-bucket -it -p 8083:8083 --volume C:\Users\Administrator\.aws:/root/.aws/ admin-pdf-reader-v2
 ##docker run -e BUCKET_NAME=sidd-poc-bucket --mount type=bind,source="c:\Users\Administrator\.aws\",target="root/.aws/" -p 8083:8083 -it admin-pdf-reader
 
 #docker run -e BUCKET_NAME=sidd-poc-bucket -it -p 8083:8083 --volume C:\Users\temp:/root/temp admin-pdf-reader
 
-##docker run -e BUCKET_NAME=sidd-poc-bucket -it -p 8083:8083 admin-pdf-reader
+##docker run -it -p 8083:8083 admin-pdf-reader-v2
 
 
 #docker exec -it fc1fe5885fa2 CMD.exe

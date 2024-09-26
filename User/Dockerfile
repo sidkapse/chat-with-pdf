@@ -11,8 +11,7 @@ COPY . ./
 # Health check
 HEALTHCHECK CMD curl --fail http://localhost:$PORT || exit 1
 
-ENV PORT=8083
+ENV PORT=8084
 ENV BUCKET_NAME=sidd-poc-bucket-us
 EXPOSE $PORT
-ENTRYPOINT [ "streamlit", "run", "admin.py", "--server.port=8083", "--server.address=0.0.0.0" ]
-RUN echo $AWS_PROFILE
+ENTRYPOINT [ "streamlit", "run", "app.py", "--server.port=8084", "--server.address=0.0.0.0" ]
